@@ -15,6 +15,7 @@ module CustomPackages
     end
 
     def prepare
+      FileUtils.mkdir_p(@cache_dir)
       Dir.chdir(@cache_dir)
     end
 
