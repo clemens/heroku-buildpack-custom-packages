@@ -24,13 +24,15 @@ module CustomPackages
 
     def install_packages(package_file)
       @config, @packages = YAML.load_file(package_file).values_at('config', 'packages')
+      @config = Hash[@config.map { |key, value| [key.to_sym, value] }]
 
       @packages.each do |package, steps|
         topic "Installing #{package}"
 
         steps.each do |step|
-          puts step
-          run(step)
+          command = step % @config
+          puts command
+          run command
         end
       end
     end
