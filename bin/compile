@@ -10,4 +10,3 @@ require 'custom_packages'
 
 package_installer = CustomPackages::PackageInstaller.new(ARGV[0], ARGV[1])
 package_installer.install_packages(File.join(ARGV[0], 'packages.yml'))
-package_installer.cleanup

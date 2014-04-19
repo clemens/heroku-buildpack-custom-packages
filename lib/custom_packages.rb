@@ -11,20 +11,17 @@ module CustomPackages
     def initialize(*args)
       @build_dir, @cache_dir = args
 
-      @target_dir = Pathname.new(File.join(@build_dir, 'tmp', 'packages'))
-
       prepare
     end
 
     def prepare
-      FileUtils.rm_rf(@target_dir)
-      FileUtils.mkdir_p(@target_dir)
-      Dir.chdir(@target_dir)
+      Dir.chdir(@cache_dir)
     end
 
     def install_packages(package_file)
       @config, @packages = YAML.load_file(package_file).values_at('config', 'packages')
       @config = Hash[@config.map { |key, value| [key.to_sym, value] }]
+      @config.merge!(:cache_dir => @cache_dir, :build_dir => @build_dir)
 
       @packages.each do |package, steps|
         topic "Installing #{package}"
@@ -35,10 +32,6 @@ module CustomPackages
           run command
         end
       end
-    end
-
-    def cleanup
-      FileUtils.rm_rf(@target_dir)
     end
   end
 end
