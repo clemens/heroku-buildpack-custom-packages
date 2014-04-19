@@ -23,6 +23,8 @@ module CustomPackages
       @config = Hash[@config.map { |key, value| [key.to_sym, value] }]
       @config.merge!(:cache_dir => @cache_dir, :build_dir => @build_dir)
 
+      puts "Installing packages (BUILD_DIR: #{@build_dir}, CACHE_DIR: #{@cache_dir})"
+
       @packages.each do |package, steps|
         topic "Installing #{package}"
 
