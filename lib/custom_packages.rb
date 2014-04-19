@@ -21,6 +21,7 @@ module CustomPackages
 
     def install_packages(package_file)
       @config, @packages = YAML.load_file(package_file).values_at('config', 'packages')
+      @config ||= {}
       @config = Hash[@config.map { |key, value| [key.to_sym, value] }]
       @config.merge!(:cache_dir => @cache_dir, :build_dir => @build_dir)
 
