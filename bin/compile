@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+# sync output
+$stdout.sync = true
+
+$:.unshift File.expand_path('../../lib', __FILE__)
+
+require 'custom_packages/shell_helpers'
+require 'custom_packages'
+
+package_installer = CustomPackages::PackageInstaller.new(ARGV[0], ARGV[1])
+package_installer.install_packages(File.join(ARGV[0], 'packages.yml'))
+package_installer.cleanup

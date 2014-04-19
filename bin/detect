@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+if Pathname.new(ARGV.first).join('packages.yml').exist?
+  puts 'Custom Packages'
+  exit 0
+end
+
+exit 1
